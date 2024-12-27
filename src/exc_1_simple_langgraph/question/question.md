@@ -19,3 +19,12 @@ I am using Tavily for this agent tool
 ### sample code to asnwer the task can be found here
 
 https://github.com/EmiRoberti77/langgraph_ts_emi_excercises/blob/main/src/exc_1_simple_langgraph/answer/task2/index.ts
+
+### task 3 - conditional workflows
+
+Using the code base from task 2, lets build a workflow that decides the langGraph needs to call
+and agent tool again or complete the flow. create a conditional node that is able to determine how to proceed
+
+### sample code to asnwer the task can be found here
+
+https://github.com/EmiRoberti77/langgraph_ts_emi_excercises/blob/main/src/exc_1_simple_langgraph/answer/task3/index.ts

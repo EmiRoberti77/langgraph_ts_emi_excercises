@@ -95,7 +95,6 @@ const weatherTool = tool(async ({ prompt }) => {
     });
   }
 
-  console.log('weather tool message:', [aiResponse]);
   return {
     messages: [aiResponse],
   };
@@ -108,15 +107,17 @@ const refineResponseTool = tool(async ({ messages, prompt, context }) => {
   console.log('refine tool ');
   const toolMessages = messages;
   const lastToolMessage = toolMessages[toolMessages.length - 1];
-  //console.log('last tool massage', lastToolMessage);
+  //create a prompt template that has more content for the new LLM to respond with
   const refinedMessage = `context:${context}-prompt:${prompt}-lastMessage:${lastToolMessage}`;
+
   console.log(refinedMessage);
   const llm = new ChatAnthropic({
     model: 'claude-3-5-sonnet-20240620',
     temperature: 0.7,
   });
+
   const response = await llm.invoke(refinedMessage);
-  console.log('refine tool message:', [response.content]);
+
   return {
     messages: [response.content],
   };

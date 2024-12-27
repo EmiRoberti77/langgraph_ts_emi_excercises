@@ -52,19 +52,29 @@ const refineToolSchema = {
 };
 
 //create Annotation state
-// - include messages
-// - prompt
-// - context
+// * include messages
+// * prompt
+// * context
 const GraphState = Annotation.Root({
+  // the messages are an array of string that are collected
+  // during the workflow of the langGraph
   messages: Annotation<string[]>({
     reducer: (x, y) => x.concat(y),
   }),
+  // this is the prompt that is passed
+  // via the state and the tools
+  // to find the best answer
   prompt: Annotation<string>(),
+  // this is a extra context attribute to
+  // to help refine the responses
   context: Annotation<string>(),
 });
 
-//create tool
+//create tool a weather tool
 const weatherTool = tool(async ({ prompt }) => {
+  // for this sample i am creating a JSON response
+  // for the weather, this is because i want to focus
+  // on the logic of how the tools are put together
   console.log('weather tool is called', prompt);
   let aiResponse;
   if (prompt.includes('Rome')) {
@@ -91,6 +101,9 @@ const weatherTool = tool(async ({ prompt }) => {
   };
 }, weatherToolSchema);
 
+// this tool is called at the end of the workflow to refine the answer
+// the responses from the state messages are passed into a separate LLM
+// to provide a more refined answer
 const refineResponseTool = tool(async ({ messages, prompt, context }) => {
   console.log('refine tool ');
   const toolMessages = messages;
@@ -126,7 +139,6 @@ const workflow = new StateGraph(GraphState)
   .addEdge(START, 'weather')
   .addEdge('weather', 'refined')
   .addEdge('refined', END);
-//.addEdge('weather', END);
 
 //create memory check point and compile
 const checkpointer = new MemorySaver();
@@ -145,6 +157,7 @@ async function runGraph() {
       thread_id: 'emi1',
     },
   });
+
   const response = finalState.messages[finalState.messages.length - 1];
   console.log(response);
 }

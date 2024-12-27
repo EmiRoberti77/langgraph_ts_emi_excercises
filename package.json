@@ -1,0 +1,25 @@
+{
+  "name": "langgraph_emi_exercises",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@langchain/anthropic": "^0.3.11",
+    "@langchain/langgraph": "^0.2.36",
+    "@langchain/openai": "^0.3.16",
+    "dotenv": "^16.4.7",
+    "langchain": "^0.3.8",
+    "zod": "^3.24.1"
+  }
+}
